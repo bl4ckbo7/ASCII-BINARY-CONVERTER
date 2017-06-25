@@ -1,0 +1,100 @@
+<HTML>
+<HEAD>
+</HEAD>
+<BODY>
+<CODE>
+<PRE>
+<FONT COLOR="#008000">/*
+*PROGRAM: ASCII-BINARY CONVERTER
+*AUTHOR: ANDY W. KAWA
+*VERSION: 0.1.2017
+*DATE: July 15, 2017.
+*/</FONT>
+
+<FONT COLOR="#0000ff">#include</FONT> &lt;iostream&gt;
+<FONT COLOR="#0000ff">#include</FONT> &lt;stdlib.h&gt;
+<FONT COLOR="#0000ff">#include</FONT> &lt;iomanip&gt;
+<FONT COLOR="#0000ff">#include</FONT> &lt;math.h&gt;
+<FONT COLOR="#0000ff">#include</FONT> &lt;fstream&gt;
+
+<FONT COLOR="#0000ff">int</FONT> main()
+{
+&nbsp;&nbsp;&nbsp;&nbsp; system(<FONT COLOR="#ff0000">"color 0a"</FONT>);
+&nbsp;&nbsp;&nbsp;&nbsp; system(<FONT COLOR="#ff0000">"title ASCII-BINARY CONVERTER v0.1.2017"</FONT>);
+&nbsp;&nbsp;&nbsp;&nbsp; <FONT COLOR="#0000ff">int</FONT> digit[1000], len, base(2), rem[8], j(0), k(8);
+&nbsp;&nbsp;&nbsp;&nbsp; std::string ch;
+
+&nbsp;&nbsp;&nbsp;&nbsp; std::cout&lt;&lt;<FONT COLOR="#ff0000">"\n"</FONT>&lt;&lt;<FONT COLOR="#ff0000">"\t \tASCII TO BINARY CONVERTER V0.1.2017"</FONT>;
+&nbsp;&nbsp;&nbsp;&nbsp; std::cout&lt;&lt;<FONT COLOR="#ff0000">"\n"</FONT>&lt;&lt;<FONT COLOR="#ff0000">"\t\t\tCREATED BY ANDY KAWA\n\n"</FONT>;
+&nbsp;&nbsp;&nbsp;&nbsp; std::cout&lt;&lt;<FONT COLOR="#ff0000">"\nASCII(STRING): "</FONT>;
+&nbsp;&nbsp;&nbsp;&nbsp; getline(std::cin,ch);
+&nbsp;&nbsp;&nbsp;&nbsp; std::cout&lt;&lt;<FONT COLOR="#ff0000">"\n\n"</FONT>;
+
+&nbsp;&nbsp;&nbsp;&nbsp; <FONT COLOR="#008000">//calc the length of ch</FONT>
+&nbsp;&nbsp;&nbsp;&nbsp; len = ch.length();
+
+&nbsp;&nbsp;&nbsp;&nbsp; <FONT COLOR="#0000ff">for</FONT>(<FONT COLOR="#0000ff">int</FONT> i=0; i&lt;len; i++){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; digit[i] = <FONT COLOR="#0000ff">static_cast</FONT>&lt;<FONT COLOR="#0000ff">int</FONT>&gt;(ch[i]);
+&nbsp;&nbsp;&nbsp;&nbsp; }
+
+&nbsp;&nbsp;&nbsp;&nbsp; <FONT COLOR="#008000">//file stream section begins here</FONT>
+&nbsp;&nbsp;&nbsp;&nbsp; std::ofstream writeFile;
+&nbsp;&nbsp;&nbsp;&nbsp; writeFile.open(<FONT COLOR="#ff0000">"ASCII-BINARY.txt"</FONT>);
+
+&nbsp;&nbsp;&nbsp;&nbsp; std::cout&lt;&lt;<FONT COLOR="#ff0000">"DECIMAL: "</FONT>;
+&nbsp;&nbsp;&nbsp;&nbsp; <FONT COLOR="#0000ff">for</FONT>(<FONT COLOR="#0000ff">int</FONT> l=0; l&lt;len; l++){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; std::cout&lt;&lt;digit[l]&lt;&lt;<FONT COLOR="#ff0000">" "</FONT>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; writeFile&lt;&lt;digit[l]&lt;&lt;<FONT COLOR="#ff0000">" "</FONT>;
+&nbsp;&nbsp;&nbsp;&nbsp; }
+
+&nbsp;&nbsp;&nbsp;&nbsp; std::cout&lt;&lt;<FONT COLOR="#ff0000">"\n\n\n"</FONT>;
+&nbsp;&nbsp;&nbsp;&nbsp; writeFile&lt;&lt;<FONT COLOR="#ff0000">"\n\n\n"</FONT>;
+
+&nbsp;&nbsp;&nbsp;&nbsp; std::cout&lt;&lt;<FONT COLOR="#ff0000">"HEXADECIMAL: "</FONT>;
+&nbsp;&nbsp;&nbsp;&nbsp; <FONT COLOR="#0000ff">for</FONT>(<FONT COLOR="#0000ff">int</FONT> n=0; n&lt;len; n++){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; std::cout&lt;&lt;std::hex&lt;&lt;digit[n]&lt;&lt;<FONT COLOR="#ff0000">" "</FONT>;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; writeFile&lt;&lt;std::hex&lt;&lt;digit[n]&lt;&lt;<FONT COLOR="#ff0000">" "</FONT>;
+&nbsp;&nbsp;&nbsp;&nbsp; }
+
+&nbsp;&nbsp;&nbsp;&nbsp; std::cout&lt;&lt;<FONT COLOR="#ff0000">"\n\n\n"</FONT>;
+&nbsp;&nbsp;&nbsp;&nbsp; writeFile&lt;&lt;<FONT COLOR="#ff0000">"\n\n\n"</FONT>;
+
+&nbsp;&nbsp;&nbsp;&nbsp; std::cout&lt;&lt;<FONT COLOR="#ff0000">"BINARY: "</FONT>;
+&nbsp;&nbsp;&nbsp;&nbsp; <FONT COLOR="#0000ff">for</FONT>(<FONT COLOR="#0000ff">int</FONT> m=0; m&lt;len; m++){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <FONT COLOR="#0000ff">while</FONT>(digit[m]&gt;0||j&lt;8){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <FONT COLOR="#008000">//finds the remainder of the number</FONT>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rem[j] = digit[m]%base;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <FONT COLOR="#008000">//divides the number by the base value choosed</FONT>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; digit[m] = digit[m]/base;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <FONT COLOR="#008000">//increments the array value</FONT>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; j++;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <FONT COLOR="#0000ff">while</FONT>(k&gt;0){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <FONT COLOR="#008000">//outputs the binaries</FONT>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; std::cout&lt;&lt;rem[k-1];
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; writeFile&lt;&lt;rem[k-1];
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <FONT COLOR="#008000">//decrements the array value</FONT>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; k--;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; std::cout&lt;&lt;<FONT COLOR="#ff0000">" "</FONT>; <FONT COLOR="#008000">//output the space after binary value here</FONT>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; writeFile&lt;&lt;<FONT COLOR="#ff0000">" "</FONT>;
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <FONT COLOR="#008000">//resets the iterators</FONT>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; j = 0;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; k = 8;
+
+&nbsp;&nbsp;&nbsp;&nbsp; }
+
+&nbsp;&nbsp;&nbsp;&nbsp; std::cout&lt;&lt;<FONT COLOR="#ff0000">"\n\n\n"</FONT>;
+&nbsp;&nbsp;&nbsp;&nbsp; writeFile&lt;&lt;<FONT COLOR="#ff0000">"\n\n\n"</FONT>;
+
+&nbsp;&nbsp;&nbsp;&nbsp; writeFile.close();
+&nbsp;&nbsp;&nbsp;&nbsp; <FONT COLOR="#008000">//file stream section ends here</FONT>
+
+&nbsp;&nbsp;&nbsp;&nbsp; <FONT COLOR="#0000ff">return</FONT> 0;
+}
+</PRE>
+</CODE>
+</BODY>
+</HTML>
